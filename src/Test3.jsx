@@ -3,8 +3,44 @@ import "./test3.css";
 import example1 from "./images/1.png";
 import example2 from "./images/2.png";
 import example3 from "./images/3.png";
+import PropTypes from "prop-types";
 
 class Test3 extends React.PureComponent{
+  static propTypes = {
+      history: PropTypes.object.isRequired,
+    };
+
+    constructor(props){
+      super(props);
+      this.state = {
+        username: "",
+        age: "",
+
+      };
+    }
+
+
+  handleSubmit = (event) => {
+      event.preventDefault();
+      console.log("submit", this.state);
+      fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify(this.state),
+      })
+      .then(res => res.json())
+      .catch(err =>{
+        console.log(err);
+      });
+    };
+
+    handleChange = (e) => {
+      this.setState({
+        [e.target.name]: e.target.value,
+      });
+    };
   render(){
     return (
       <div>
@@ -31,7 +67,7 @@ class Test3 extends React.PureComponent{
         <h3>
           Lahendus:
         </h3>
-        <form >
+        <form onSubmit = {this.handleSubmit} >
           <div className={"row"}>
             <label htmlFor="username">Username</label>
             <input name="username" type="text"/>
