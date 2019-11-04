@@ -18,6 +18,10 @@ const ITEMS = [
 ];
 
 const Test1 = () => {
+  let sum = 0;
+  ITEMS.forEach(item => {
+    sum+= item.price;
+  });
   return (
     <div>
       <div className={"description"}>
@@ -31,9 +35,15 @@ const Test1 = () => {
         <img style={{width: 200}} src={test1Example}/>
       </div>
       <div>
-        [replace me]
+        <ul>
+          {ITEMS.map(item => (
+            <li key = {item.name}>
+              <div>Name: {item.name} Price: {item.price}</div>
+            </li>
+            ))}
+        </ul>
       </div>
-      <div><span className={"bold"}>Summa kokku:</span> [replace me]</div>
+      <div><span className={"bold"}>Summa kokku: {sum}  </span> </div>
     </div>
   );
 };
