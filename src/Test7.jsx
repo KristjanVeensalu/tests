@@ -1,12 +1,72 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 class Test7 extends React.PureComponent {
+	
+	static propTypes = {
+		history: PropTypes.object.isRequired,
+	};
+
+
+  constructor(props){
+    super(props);
+    this.state={
+      fullName: "",
+      address: "",
+      phoneNumber:"",
+    };
+  }
+
+  handleSubmit=(event)=>{
+    event.preventDefault();
+    fetch("/api/v1/users", {
+      method: "POST",
+      body: JSON.stringify(this.state),
+    })
+    .then(res =>res.json())
+    .then(data =>{
+      console.log("data", data);
+      this.props.history.push("/");
+    })
+    .catch(err =>{
+      console.log(err);
+      
+    });
+  };
+	
+	
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+	
   render() {
     return (
       <div>
         <Task />
         implement
-      </div>
+		<div className="ds">
+          <form className="ds-item style-2" onSubmit={this.handleSubmit}>
+            <div className={"row"}>
+              <label htmlFor="fullName">Nimi</label>
+              <input name={"fullName"} type="text" onChange = {this.handleChange} />
+            </div>
+            <div className={"row"}>
+              <label htmlFor="address">Address</label>
+				<input name={"address"} type="text" onChange = {this.handleChange} />
+            </div>
+            <div className={"row"}>
+              <label htmlFor="phoneNumber">Contact</label>
+				<input name={"phoneNumber"} type="text" onChange = {this.handleChange} />
+            </div>
+            <button style={{width: "100%"}}>
+              Otsi
+            </button>
+          </form>
+
+		</div>
+        </div>
     );
   }
 }
