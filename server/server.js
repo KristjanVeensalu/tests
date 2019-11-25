@@ -10,11 +10,12 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 const productsRouter = require("./product.router.js");
 const ordersRouter = require("./orders.router.js");
+const usersRouter = require("./users.router.js");
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/products", productsRouter);
 app.use("/api/v1/orders", ordersRouter);
 app.use("/static", express.static("dist/static"));

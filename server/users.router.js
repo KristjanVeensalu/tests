@@ -9,8 +9,10 @@ router.get("/", async (req, res)=>{
 });
 
 router.post("/" ,async (req, res)=>{
-	const item1 = new Item(props);
-	item1.save( err => {
+	console.log("body", req.body);
+	res.send(200);
+	const user = new User(req.body);
+	user.save( err => {
 		if(err){
 			console.log("Error", err);
 			res.send(500);

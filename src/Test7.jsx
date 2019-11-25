@@ -12,15 +12,19 @@ class Test7 extends React.PureComponent {
     super(props);
     this.state={
       fullName: "",
-      address: "",
       phoneNumber:"",
+      address: "",
     };
   }
 
   handleSubmit=(event)=>{
     event.preventDefault();
+	console.log(this.state);
     fetch("/api/v1/users", {
-      method: "POST",
+		method: "POST",
+		headers: {
+		"content-type":"application/json"
+		},
       body: JSON.stringify(this.state),
     })
     .then(res =>res.json())
@@ -50,15 +54,15 @@ class Test7 extends React.PureComponent {
           <form className="ds-item style-2" onSubmit={this.handleSubmit}>
             <div className={"row"}>
               <label htmlFor="fullName">Nimi</label>
-              <input name={"fullName"} type="text" onChange = {this.handleChange} />
+              <input name={"fullName"} type="text" value={this.state.fullName} onChange = {this.handleChange} />
             </div>
             <div className={"row"}>
               <label htmlFor="address">Address</label>
-				<input name={"address"} type="text" onChange = {this.handleChange} />
+				<input name={"address"} type="text" value={this.state.address} onChange = {this.handleChange} />
             </div>
             <div className={"row"}>
               <label htmlFor="phoneNumber">Contact</label>
-				<input name={"phoneNumber"} type="text" onChange = {this.handleChange} />
+				<input name={"phoneNumber"} type="text" value={this.state.phoneNumber} onChange = {this.handleChange} />
             </div>
             <button style={{width: "100%"}}>
               Otsi
